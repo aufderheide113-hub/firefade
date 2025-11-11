@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FireFade Barbershop – Berlin</title>
+  <meta name="description" content="FireFade Barbershop – Stilvolle Haarschnitte & Bartpflege. Beispielseite mit Öffnungszeiten, Preisen, Behandlungen und interaktiver Google-Maps-Karte in Berlin." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0b0b0b; --bg-alt:#121212; --card:#171717; --text:#f3f3f3; --muted:#b9b9b9; --accent:#ff6a00; --accent-2:#e63946; --border:#262626; --shadow:0 10px 30px rgba(0,0,0,0.5); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body, p, h1, h2, h3, h4, h5, h6, span, div, li, td, th { caret-color: transparent; cursor: default; user-select: none; }
+    a, button, iframe { cursor: pointer; user-select: auto; }
+    body { margin:0; background: radial-gradient(1200px 800px at 80% -20%, rgba(230,57,70,0.15), transparent 60%), radial-gradient(1000px 700px at -10% 20%, rgba(255,106,0,0.12), transparent 60%), var(--bg); color:var(--text); font-family:'Montserrat', system-ui, sans-serif; line-height:1.6; overflow-x:hidden; }
+    a { color: var(--text); text-decoration: none; }
+    img { max-width:100%; height:auto; display:block; }
+    .container { width:min(1200px,92%); margin-inline:auto; }
+
+    /* Header */
+    header { position:sticky; top:0; z-index:40; background:rgba(11,11,11,0.8); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
+    .nav { display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.5px; }
+    .brand-badge { width:36px; height:36px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:var(--shadow); }
+    .brand-badge svg { width:22px; height:22px; }
+    nav ul { list-style:none; display:flex; gap:22px; margin:0; padding:0; }
+    nav a { color:var(--muted); font-weight:600; cursor:pointer; }
+    nav a:hover, nav a.active { color:var(--text); }
+    .menu-toggle { display:none; background:transparent; border:1px solid var(--border); padding:8px 12px; border-radius:10px; color:var(--text); cursor:pointer; }
+    @media (max-width:880px){ nav ul{ display:none; position:absolute; top:64px; right:4%; background:var(--bg-alt); border:1px solid var(--border); border-radius:12px; padding:14px; flex-direction:column; gap:10px; width:min(260px,92vw); box-shadow:var(--shadow);} nav ul.open{display:flex;} .menu-toggle{display:inline-flex;} }
+
+    /* Hero */
+    .hero { position:relative; padding:80px 0 60px; overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:36px; align-items:center; }
+    .eyebrow { color:var(--accent); font-weight:800; text-transform:uppercase; letter-spacing:1.5px; font-size:12px; }
+    h1 { font-size:clamp(32px,6vw,64px); line-height:1.05; margin:6px 0 16px; }
+    .lead { color:var(--muted); font-size:18px; }
+
+    /* Sections */
+    section { padding:64px 0; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:18px; margin-bottom:24px; }
+    .section-head h2 { margin:0; font-size:clamp(24px,4vw,36px); }
+    .section-head p { margin:0; color:var(--muted); }
+
+    /* Cards & Gallery */
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow); }
+    .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+    .placeholder { aspect-ratio:4/3; border:2px dashed #3a3a3a; border-radius:14px; display:grid; place-items:center; color:var(--muted); background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 8px, rgba(255,255,255,0.04) 8px 16px); }
+
+    @media (max-width:980px){ .cards{ grid-template-columns:1fr 1fr; } }
+    @media (max-width:640px){ .cards{ grid-template-columns:1fr; } }
+
+    /* Map */
+    .map-wrapper { border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+    .map-wrapper iframe { width:100%; height:420px; border:0; display:block; filter:grayscale(20%) contrast(95%); }
+
+    /* Device-specific overrides via body classes */
+    body.device-phone .container { width:min(100%,95%); }
+    body.device-phone h1 { font-size: clamp(28px, 8vw, 40px); }
+    body.device-phone .hero { padding:56px 0 40px; }
+    body.device-phone .hero-grid { grid-template-columns:1fr; gap:20px; }
+    body.device-phone nav ul { right:2%; }
+    body.device-phone .map-wrapper iframe { height: 340px; }
+
+    body.device-tablet .container { width:min(1000px,94%); }
+    body.device-tablet .hero-grid { grid-template-columns:1fr 1fr; gap:28px; }
+    body.device-tablet .map-wrapper iframe { height: 420px; }
+
+    body.device-desktop .container { width:min(1200px,90%); }
+    body.device-desktop .hero-grid { grid-template-columns:1.1fr 0.9fr; }
+
+    /* Onboarding Modal */
+    .device-modal { position:fixed; inset:0; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:60; }
+    .device-card { width:min(680px,92vw); background:var(--card); border:1px solid var(--border); border-radius:18px; padding:20px; box-shadow:var(--shadow); text-align:center; }
+    .device-title { font-size:clamp(20px,3.5vw,28px); margin:8px 0 4px; color:var(--text); }
+    .device-sub { color:var(--text); margin:0 0 16px; }
+    .device-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:8px; }
+    .device-btn { display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center; padding:14px; border-radius:14px; border:1px solid var(--border); background:#141414; font-weight:700; color:var(--text); transition: all 0.2s ease; }
+    .device-btn:hover { outline:2px solid rgba(255,106,0,0.5); }
+    .device-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; border:none; box-shadow:var(--shadow); transform:scale(1.03); }
+    .device-btn svg { width:30px; height:30px; }
+    .device-note { color:var(--muted); font-size:13px; margin-top:14px; }
+    @media (max-width:560px){ .device-grid{ grid-template-columns:1fr; } }
+
+    /* CTA Button */
+    .cta-btn { background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; padding:10px 16px; border-radius:999px; font-weight:700; border:none; box-shadow:var(--shadow); cursor:pointer; transition:transform 0.2s ease, opacity 0.2s ease; }
+    .cta-btn:hover { transform:translateY(-2px); opacity:0.9; }
+  </style>
+</head>
+<body class="device-unset">
+  <!-- Device Selection Modal -->
+  <div id="deviceModal" class="device-modal" role="dialog" aria-modal="true" aria-labelledby="deviceTitle">
+    <div class="device-card">
+      <h2 id="deviceTitle" class="device-title">Womit bist du unterwegs?</h2>
+      <p class="device-sub">Wähle dein Gerät, damit das Layout perfekt passt.</p>
+      <div class="device-grid">
+        <button class="device-btn" data-device="phone" aria-label="Smartphone auswählen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Smartphone
+        </button>
+        <button class="device-btn" data-device="tablet" aria-label="Tablet auswählen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          Tablet
+        </button>
+        <button class="device-btn" data-device="desktop" aria-label="Computer auswählen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Computer
+        </button>
+      </div>
+      <p class="device-note">Tipp: Du kannst später unten links erneut wählen.</p>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 7c-2 1-4.5 1-6.5 0C11.2 6 8 6 6 7"/>
+            <path d="M20 7v4c0 4-3 7-8 7s-8-3-8-7V7"/>
+          </svg>
+        </div>
+        <a href="#top">FireFade Barbershop</a>
+      </div>
+      <nav>
+        <button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Menü umschalten">☰</button>
+        <ul>
+          <li><a href="#leistungen">Behandlungen</a></li>
+          <li><a href="#preise">Preise</a></li>
+          <li><a href="#zeiten">Öffnungszeiten</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#kontakt">Kontakt & Karte</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Beispiel-Seite • Berlin</div>
+        <h1>FireFade Barbershop<br><span style="background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Cuts • Bart • Pflege</span></h1>
+        <p class="lead">Moderner Barbershop mit klassischen Wurzeln. Präzise Fades, saubere Konturen und entspannte Atmosphäre – genau so, wie du es magst.</p>
+      </div>
+      <div>
+        <div class="placeholder" style="height: 340px;"><span>deine Bilder</span></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- LEISTUNGEN -->
+  <section id="leistungen">
+    <div class="container">
+      <div class="section-head"><h2>Behandlungen</h2><p>Präzision, Stil und Pflege – alles an einem Ort.</p></div>
+      <div class="cards">
+        <div class="card"><h3>Skin Fade / Classic Cut</h3><p>Beratung, Schnitt mit Schere & Maschine, Styling inkl.</p></div>
+        <div class="card"><h3>Bart Trim & Konturen</h3><p>Saubere Linien mit Maschine & Rasiermesser, Pflegeöl.</p></div>
+        <div class="card"><h3>Hot Towel Shave</h3><p>Klassische Nassrasur mit warmem Handtuch & Balsam.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREISE -->
+  <section id="preise">
+    <div class="container">
+      <div class="section-head"><h2>Preise</h2><p>Faire Preise – klare Leistung.</p></div>
+      <div class="cards">
+        <div class="card"><h3>Haarschnitt</h3><p><strong>29€</strong> – Waschen, Schnitt, Styling • 30–40 Min</p></div>
+        <div class="card"><h3>Bart Trim</h3><p><strong>15€</strong> – Konturen & Pflege • 15–20 Min</p></div>
+        <div class="card"><h3>Cut & Bart</h3><p><strong>40€</strong> – Komplettpaket • 50–60 Min</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÖFFNUNGSZEITEN -->
+  <section id="zeiten">
+    <div class="container">
+      <div class="section-head"><h2>Öffnungszeiten</h2><p>Wir sind für dich da.</p></div>
+      <div class="card">
+        <table><tbody>
+          <tr><td>Mo–Mi</td><td>10:00 – 19:00</td></tr>
+          <tr><td>Do–Fr</td><td>10:00 – 20:00</td></tr>
+          <tr><td>Sa</td><td>09:00 – 16:00</td></tr>
+          <tr><td>So</td><td>Geschlossen</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section id="galerie">
+    <div class="container">
+      <div class="section-head"><h2>Galerie</h2><p>Hier ist Platz für deine Arbeiten und deinen Shop.</p></div>
+      <div class="gallery">
+        <div class="placeholder"><span>deine Bilder</span></div>
+        <div class="placeholder"><span>deine Bilder</span></div>
+        <div class="placeholder"><span>deine Bilder</span></div>
+        <div class="placeholder"><span>deine Bilder</span></div>
+        <div class="placeholder"><span>deine Bilder</span></div>
+        <div class="placeholder"><span>deine Bilder</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT & KARTE -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="section-head"><h2>Kontakt & Karte</h2><p>Beispielstandort in Berlin – genaue Adresse folgt.</p></div>
+      <div class="cards" style="align-items:start;">
+        <div class="card">
+          <h3>FireFade Barbershop</h3>
+          <p>Beispielstraße 1<br>10115 Berlin</p>
+          <p><strong>Telefon:</strong> <a href="tel:+49301234567">030 1234567</a><br><strong>E-Mail:</strong> <a href="mailto:hallo@firefade-barber.de">hallo@firefade-barber.de</a></p>
+          <p class="fine">Dies ist eine Beispielseite ohne echte Adresse. Die Karte zeigt Berlin.</p>
+          <a href="tel:+49301234567" class="cta-btn">Jetzt anrufen</a>
+        </div>
+        <div class="map-wrapper">
+          <iframe title="Google Maps – Berlin" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.811941666566!2d13.4050!3d52.52!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c10b1c3b1b%3A0x2d0b1c0!2sBerlin!5e0!3m2!1sde!2sde!4v1700000000000"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating re-open control -->
+  <button id="reopenDevice" aria-label="Geräteauswahl öffnen" style="position:fixed; left:14px; bottom:14px; z-index:50; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; border:none; border-radius:999px; padding:10px 14px; font-weight:800; box-shadow:var(--shadow);">Gerät ändern</button>
+
+  <script>
+    // Elements & key
+    const modal = document.getElementById('deviceModal');
+    const reopen = document.getElementById('reopenDevice');
+    const key = 'ff_device_pref_v1';
+
+    function applyDeviceClass(device){
+      document.body.classList.remove('device-unset','device-phone','device-tablet','device-desktop');
+      document.querySelectorAll('.device-btn').forEach(b=>b.classList.remove('active'));
+      if(device==='phone') document.body.classList.add('device-phone');
+      else if(device==='tablet') document.body.classList.add('device-tablet');
+      else document.body.classList.add('device-desktop');
+      const activeBtn=document.querySelector(`.device-btn[data-device="${device}"]`);
+      if(activeBtn) activeBtn.classList.add('active');
+    }
+
+    function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+    function openModal(){ modal.style.display='flex'; modal.removeAttribute('aria-hidden'); }
+
+    // Load saved choice or show modal
+    const saved = localStorage.getItem(key);
+    if(saved){ applyDeviceClass(saved); closeModal(); }
+
+    // Bind selection buttons
+    modal.querySelectorAll('.device-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const d = btn.dataset.device;
+        localStorage.setItem(key, d);
+        applyDeviceClass(d);
+        closeModal();
+        fixHeights();
+      });
+    });
+
+    // Reopen control
+    reopen.addEventListener('click',()=>{ openModal(); });
+
+    // Safety: prevent clipped content on orientation/resize
+    function fixHeights(){
+      const ifr = document.querySelector('.map-wrapper iframe');
+      if(!ifr) return;
+      const isPhone = document.body.classList.contains('device-phone');
+      const isTablet = document.body.classList.contains('device-tablet');
+      if(isPhone){ ifr.style.height = '340px'; }
+      else if(isTablet){ ifr.style.height = '420px'; }
+      else { ifr.style.height = '480px'; }
+    }
+    window.addEventListener('resize', fixHeights);
+    window.addEventListener('orientationchange', fixHeights);
+    document.addEventListener('DOMContentLoaded', fixHeights);
+  </script>
+</body>
+</html>
